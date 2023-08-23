@@ -1,16 +1,35 @@
 // Topbar.js
-import React from 'react';
+"use client"
+import React, { FC, useState } from 'react';
 import styles from './Topbar.module.css'; // Import CSS module
 
+
+
+interface LinkProps {
+    label: string,
+    selected?: boolean
+}
+const Link: FC<LinkProps> = ({ label, selected = false }) => {
+    return <a href={`#${label}`} className={`block px-10 py-1 text-white ${selected ? 'bg-blue-700 dark:bg-blue-700' : 'hover:text-blue-700'} rounded-full   md:text-white md:px-10 md:dark:text-white`}>{label}</a>
+}
+
+
+
+const links = [
+    "Tracker", "Cryptocurrencies", "Pricing"
+]
+
 const Topbar = () => {
+    const [selectedLink, setSelectedLink] = useState(0)
+
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 bg-black">
+        <nav className="">
+            <div className="flex flex-wrap items-center justify-between mx-auto p-4 bg-black">
                 <a href="https://flowbite.com/" className="flex items-center">
                     <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">CryptoWave Tracker</span>
                 </a>
-                <div className="flex md:order-2">
+                <div className="flex md:order-2 justify-between gap-5">
                     <button
                         type="button"
                         data-collapse-toggle="navbar-search"
@@ -33,10 +52,12 @@ const Topbar = () => {
                         <input
                             type="text"
                             id="search-navbar"
-                            className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search..."
                         />
                     </div>
+                    <button type="button" className="text-white bg-blue-700 dark:bg-blue-700' hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-700 dark:bg-blue-700' dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Login</button>
+
                     <button
                         data-collapse-toggle="navbar-search"
                         type="button"
@@ -50,7 +71,7 @@ const Topbar = () => {
                         </svg>
                     </button>
                 </div>
-                <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+                <div className="flex items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
                     <div className="relative mt-3 md:hidden">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -60,22 +81,22 @@ const Topbar = () => {
                         <input
                             type="text"
                             id="search-navbar"
-                            className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search..."
                         />
                     </div>
-                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <a href="#" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Cryptocurrencies</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Swap</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
-                        </li>
+                    {/* <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"> */}
+                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border  md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                        {links.map((link, linkIndex) => (
+                            <li key={linkIndex} onClick={() => setSelectedLink(linkIndex)}>
+                                <Link  label={link} selected={linkIndex === selectedLink} />
+                            </li>
+                        ))}
+
                     </ul>
+
                 </div>
+
             </div>
         </nav>
     );
